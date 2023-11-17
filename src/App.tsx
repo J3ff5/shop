@@ -9,12 +9,11 @@ const baseUrl = axios.create({
 });
 
 function App() {
-	const splitedUrl = window.location.pathname.split("/");
-	const productId = splitedUrl[splitedUrl.length - 1];
 
 	const [product, setProduct] = React.useState({} as Product);
 	const [values, setValues] = React.useState<string[]>([]);
 	const [quantity, setQuantity] = React.useState(1 as number);
+	const [productId, setProductId] = React.useState("180064575" as string);
 
 	const fetchProduct = React.useCallback(async () => {
 		const { data } = await baseUrl.get(`/${productId}`);
@@ -45,6 +44,16 @@ function App() {
 	const renderProduct = React.useMemo(() => {
 		return (
 			<>
+
+				<div>
+					<span>Produtos</span>
+					<select onChange={(e) => {
+						setProductId(e.target.value);
+					}}>
+						<option value="180064575">Produto 1</option>
+						<option value="180064631">Produto 2</option>
+					</select>
+				</div>
 				<span className="product_name">{product.title}</span>
 				<div className="product_image_container">
 					<img src={product.image_url} alt="product_image" className="product_image" loading="lazy" />
